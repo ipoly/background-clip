@@ -1,0 +1,474 @@
+/*
+ * Every effect below is plain CSS so it can be copy-pasted into any project.
+ * Blocks marked with `@demo <id>` / `@end` are extracted at build time and
+ * rendered inside the gallery code panels, so what you read here is exactly
+ * what the UI shows. The clip declarations are repeated per effect on purpose:
+ * each snippet has to stand on its own.
+ */
+
+/* @demo aurora */
+.fx-aurora {
+  background-image: linear-gradient(
+    100deg,
+    #22d3ee,
+    #a78bfa,
+    #f472b6,
+    #facc15,
+    #22d3ee
+  );
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: fx-aurora-pan 7s linear infinite;
+}
+
+@keyframes fx-aurora-pan {
+  to {
+    background-position: 300% 0;
+  }
+}
+/* @end */
+
+/* @demo holographic */
+@property --fx-holo-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.fx-holographic {
+  background-image:
+    repeating-linear-gradient(
+      115deg,
+      rgb(255 255 255 / 0.55) 0 5px,
+      transparent 5px 11px
+    ),
+    conic-gradient(
+      from var(--fx-holo-angle) at 50% 50%,
+      #ff2f8a,
+      #ffd23f,
+      #35f2c4,
+      #4f7cff,
+      #b14bff,
+      #ff2f8a
+    );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: fx-holo-spin 5s linear infinite;
+}
+
+@keyframes fx-holo-spin {
+  to {
+    --fx-holo-angle: 360deg;
+  }
+}
+/* @end */
+
+/* @demo shimmer */
+.fx-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    #52525b 0%,
+    #d4d4d8 38%,
+    #ffffff 50%,
+    #d4d4d8 62%,
+    #52525b 100%
+  );
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: fx-shimmer-sweep 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes fx-shimmer-sweep {
+  from {
+    background-position: 130% 0;
+  }
+  to {
+    background-position: -30% 0;
+  }
+}
+/* @end */
+
+/* @demo nebula */
+.fx-nebula {
+  background-image: url("../assets/nebula.svg");
+  background-size: 190% auto;
+  background-position: center;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: fx-nebula-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes fx-nebula-drift {
+  from {
+    background-position: 12% 40%;
+  }
+  to {
+    background-position: 88% 60%;
+  }
+}
+/* @end */
+
+/* @demo riso */
+.fx-riso {
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>"),
+    linear-gradient(135deg, #ffb03d 0%, #ff2e63 48%, #2fd3c4 100%);
+  background-size:
+    220px 220px,
+    100% 100%;
+  background-blend-mode: hard-light;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+/* @end */
+
+/* @demo retro */
+.fx-retro {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgb(6 6 12 / 0.85) 0 3px,
+      transparent 3px 11px
+    ),
+    linear-gradient(180deg, #fff3b0 0%, #ffb347 32%, #ff5f6d 66%, #b429f9 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: fx-retro-scan 1.6s linear infinite;
+}
+
+@keyframes fx-retro-scan {
+  to {
+    background-position:
+      0 -11px,
+      0 0;
+  }
+}
+/* @end */
+
+/* @demo ember */
+.fx-ember {
+  background-color: #7f1d1d;
+  background-image:
+    radial-gradient(60% 45% at 18% 105%, #fff3b0 0%, transparent 62%),
+    radial-gradient(52% 50% at 52% 108%, #ffe066 0%, transparent 58%),
+    radial-gradient(58% 45% at 84% 104%, #ffd166 0%, transparent 62%),
+    linear-gradient(0deg, #ffcc00 0%, #ff6b00 38%, #d62828 72%, #7f1d1d 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgb(255 107 0 / 0.55));
+  animation: fx-ember-flicker 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes fx-ember-flicker {
+  from {
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      14% -8%,
+      -12% -6%,
+      10% -10%,
+      0 0;
+  }
+}
+/* @end */
+
+/* @demo glitch */
+.fx-glitch {
+  position: relative;
+  display: inline-block;
+  background-image: linear-gradient(180deg, #f4f4f5, #a1a1aa);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.fx-glitch::before,
+.fx-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.fx-glitch::before {
+  background-image: linear-gradient(180deg, #ff2d55, #ff0080);
+  animation: fx-glitch-red 2.8s steps(1, end) infinite;
+}
+
+.fx-glitch::after {
+  background-image: linear-gradient(180deg, #00e5ff, #00ffa3);
+  animation: fx-glitch-cyan 2.8s steps(1, end) infinite;
+}
+
+@keyframes fx-glitch-red {
+  0%,
+  62%,
+  100% {
+    clip-path: inset(0 0 100% 0);
+    transform: none;
+  }
+  65% {
+    clip-path: inset(8% 0 62% 0);
+    transform: translate(-4px, -2px);
+  }
+  71% {
+    clip-path: inset(48% 0 24% 0);
+    transform: translate(5px, 1px);
+  }
+  78% {
+    clip-path: inset(22% 0 48% 0);
+    transform: translate(-3px, 2px);
+  }
+}
+
+@keyframes fx-glitch-cyan {
+  0%,
+  62%,
+  100% {
+    clip-path: inset(0 0 100% 0);
+    transform: none;
+  }
+  67% {
+    clip-path: inset(30% 0 40% 0);
+    transform: translate(4px, 2px);
+  }
+  74% {
+    clip-path: inset(66% 0 8% 0);
+    transform: translate(-5px, -1px);
+  }
+  81% {
+    clip-path: inset(12% 0 70% 0);
+    transform: translate(3px, -2px);
+  }
+}
+/* @end */
+
+/* @demo crt */
+.fx-crt {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgb(0 0 0 / 0.92) 0 2px,
+      transparent 2px 5px
+    ),
+    linear-gradient(180deg, #7cffb2 0%, #00e5ff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 10px rgb(0 229 255 / 0.6));
+  animation: fx-crt-roll 4s linear infinite;
+}
+
+@keyframes fx-crt-roll {
+  to {
+    background-position:
+      0 -25px,
+      0 0;
+  }
+}
+/* @end */
+
+/* @demo liquid */
+.fx-liquid {
+  background-color: #101425;
+  background-image:
+    radial-gradient(closest-side, #f472b6, transparent),
+    radial-gradient(closest-side, #38bdf8, transparent),
+    radial-gradient(closest-side, #a3e635, transparent);
+  background-size:
+    62% 150%,
+    58% 140%,
+    54% 130%;
+  background-repeat: no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: fx-liquid-drift 9s ease-in-out infinite alternate;
+}
+
+@keyframes fx-liquid-drift {
+  from {
+    background-position:
+      0% 50%,
+      50% 0%,
+      100% 100%;
+  }
+  to {
+    background-position:
+      100% 40%,
+      15% 100%,
+      0% 0%;
+  }
+}
+/* @end */
+
+/* @demo marble */
+.fx-marble {
+  background-image:
+    repeating-conic-gradient(
+      from 38deg at -28% 150%,
+      transparent 0deg 0.9deg,
+      rgb(28 25 23 / 0.6) 0.9deg 1.3deg,
+      transparent 1.3deg 2deg,
+      rgb(120 113 108 / 0.42) 2deg 2.6deg,
+      transparent 2.6deg 4.6deg
+    ),
+    linear-gradient(118deg, #ffffff 0%, #e7e5e4 55%, #a8a29e 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+/* @end */
+
+/* @demo spotlight */
+/* Registering the coordinates makes them animatable, so the light eases
+   toward the cursor instead of snapping to every pointer event. They must
+   inherit: the pointer handler writes them on the stage, the gradient reads
+   them on the text node inside it. */
+@property --fx-x {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
+@property --fx-y {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
+.fx-spotlight {
+  background-image:
+    radial-gradient(
+      12rem circle at var(--fx-x) var(--fx-y),
+      #ffffff 0%,
+      #67e8f9 28%,
+      #6366f1 52%,
+      transparent 72%
+    ),
+    linear-gradient(#3f3f46, #3f3f46);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition:
+    --fx-x 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    --fx-y 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* @end */
+
+/* @demo wipe */
+.fx-wipe {
+  background-color: #3f3f46;
+  background-image: linear-gradient(90deg, #f43f5e, #f97316 55%, #facc15);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: background-size 700ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.fx-wipe-target:hover .fx-wipe,
+.fx-wipe-target:focus-visible .fx-wipe {
+  background-size: 100% 100%;
+}
+/* @end */
+
+/* @demo gradient-border */
+.fx-gradient-border {
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  background-image:
+    linear-gradient(#0b0b12, #0b0b12),
+    linear-gradient(120deg, #22d3ee, #a78bfa 50%, #f472b6);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+/* @end */
+
+/* @demo spin-border */
+@property --fx-spin-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.fx-spin-border {
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  background-image:
+    linear-gradient(#0b0b12, #0b0b12),
+    conic-gradient(
+      from var(--fx-spin-angle),
+      #22d3ee,
+      #a78bfa,
+      #f472b6,
+      #facc15,
+      #22d3ee
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: fx-spin-border-turn 4s linear infinite;
+}
+
+@keyframes fx-spin-border-turn {
+  to {
+    --fx-spin-angle: 360deg;
+  }
+}
+/* @end */
+
+/* @demo box-models */
+.fx-box-sample {
+  border: 8px dashed rgb(255 255 255 / 0.35);
+  padding: 14px;
+  border-radius: 12px;
+  background-image: linear-gradient(135deg, #22d3ee, #a78bfa 55%, #f472b6);
+}
+
+.fx-box-border {
+  background-clip: border-box;
+}
+
+.fx-box-padding {
+  background-clip: padding-box;
+}
+
+.fx-box-content {
+  background-clip: content-box;
+}
+/* @end */
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-aurora,
+  .fx-holographic,
+  .fx-shimmer,
+  .fx-nebula,
+  .fx-retro,
+  .fx-ember,
+  .fx-crt,
+  .fx-liquid,
+  .fx-spin-border,
+  .fx-glitch::before,
+  .fx-glitch::after {
+    animation: none;
+  }
+}

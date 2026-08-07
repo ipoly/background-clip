@@ -1,0 +1,70 @@
+@import "tailwindcss";
+@import "./styles/effects.css";
+
+@theme {
+  --color-ink: #06060a;
+  --color-ink-raised: #0b0b12;
+
+  --font-display:
+    "SF Pro Display", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:
+    ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --animate-rise: rise 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink font-display text-zinc-100 antialiased;
+  }
+
+  ::selection {
+    @apply bg-fuchsia-500/40 text-white;
+  }
+}
+
+@layer components {
+  /* Dotted stage the demos sit on, so transparent glyph gaps stay readable. */
+  .demo-stage {
+    background-color: #0a0a11;
+    background-image: radial-gradient(
+      rgb(255 255 255 / 0.07) 1px,
+      transparent 1px
+    );
+    background-size: 14px 14px;
+  }
+
+  .page-glow {
+    background-image:
+      radial-gradient(
+        60rem 34rem at 12% -8%,
+        rgb(139 92 246 / 0.22),
+        transparent 65%
+      ),
+      radial-gradient(
+        52rem 30rem at 88% 4%,
+        rgb(34 211 238 / 0.18),
+        transparent 62%
+      ),
+      radial-gradient(
+        46rem 28rem at 50% 108%,
+        rgb(244 114 182 / 0.14),
+        transparent 60%
+      );
+  }
+}
