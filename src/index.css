@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./styles/effects.css";
+@import "./styles/syntax.css";
 
 @theme {
   --color-ink: #06060a;

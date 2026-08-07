@@ -23,21 +23,29 @@ pnpm lint
 ```
 src/
   styles/effects.css   every effect, as plain CSS
+  styles/syntax.css    Monokai palette for the code panels
   demos/               metadata + preview components, grouped by category
   components/          gallery chrome (hero, filter, card, code panel)
   lib/cssSource.ts     pulls the CSS snippets straight out of effects.css
+  lib/highlightCss.ts  small CSS tokenizer behind the syntax highlighting
 ```
 
 Two rules shape the code:
 
 1. **Effects live in CSS, layout lives in Tailwind.** No effect is expressed as
-   an inline style. The only `style` attribute in the app sets two custom
-   properties for the cursor spotlight, because those values are genuinely
-   dynamic.
+   an inline style. The app has exactly two `style` attributes, both carrying
+   values that are genuinely dynamic and both passing them as custom
+   properties: the cursor spotlight coordinates, and the colour a swatch in a
+   code panel has to paint.
 2. **The code panels are not copies.** Each effect in `effects.css` is wrapped in
    `/* @demo <id> */ … /* @end */`, and the gallery imports the stylesheet with
    `?raw` to extract those blocks. What a card shows is the code that renders
    it, so the two can never drift apart.
+
+Snippets are highlighted by a ~200-line CSS tokenizer rather than a
+highlighting library, which keeps the dependency list at React alone. Colour
+literals — hex and functional notations alike — get a swatch, drawn over a
+checkerboard so translucent values read as translucent.
 
 ## Adding an effect
 

@@ -1,5 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import type { CSSProperties } from 'react'
+import { tokenizeCss } from '@/lib/highlightCss'
 import { CheckIcon, CopyIcon } from './icons'
+
+/** The swatch colour is data, not styling, so it rides in as a variable. */
+type SwatchStyle = CSSProperties & { '--tok-swatch': string }
 
 interface CodePanelProps {
   code: string
@@ -8,6 +13,7 @@ interface CodePanelProps {
 
 export function CodePanel({ code, label }: CodePanelProps) {
   const [copied, setCopied] = useState(false)
+  const tokens = useMemo(() => tokenizeCss(code), [code])
 
   useEffect(() => {
     if (!copied) return
@@ -25,7 +31,7 @@ export function CodePanel({ code, label }: CodePanelProps) {
   }, [code])
 
   return (
-    <div className="relative mt-4 overflow-hidden rounded-xl border border-white/10 bg-black/50">
+    <div className="code-monokai relative mt-4 overflow-hidden rounded-xl border border-white/10">
       <div className="flex items-center justify-between border-b border-white/10 px-3 py-2">
         <span className="font-mono text-[0.65rem] tracking-[0.18em] text-zinc-500 uppercase">
           {label}
@@ -39,8 +45,31 @@ export function CodePanel({ code, label }: CodePanelProps) {
           {copied ? 'Copied' : 'Copy'}
         </button>
       </div>
-      <pre className="max-h-72 overflow-auto px-4 py-3 font-mono text-[0.7rem] leading-relaxed text-zinc-300">
-        <code>{code}</code>
+      <pre className="max-h-72 overflow-auto px-4 py-3 font-mono text-[0.7rem] leading-relaxed">
+        <code>
+          {tokens.map((token, position) => {
+            if (token.kind === 'plain') return token.value
+
+            if (token.swatch) {
+              return (
+                <span key={position} className="tok-color">
+                  <span
+                    aria-hidden="true"
+                    className="tok-swatch"
+                    style={{ '--tok-swatch': token.swatch } as SwatchStyle}
+                  />
+                  {token.value}
+                </span>
+              )
+            }
+
+            return (
+              <span key={position} className={`tok-${token.kind}`}>
+                {token.value}
+              </span>
+            )
+          })}
+        </code>
       </pre>
     </div>
   )
