@@ -109,6 +109,81 @@ export const demos: Demo[] = [
     Preview: text.MarblePreview,
   },
   {
+    id: 'split',
+    title: 'Hard Split',
+    description:
+      'Two stops a hair apart make a clean cut instead of a blend. Note the split follows the element box, not the individual letters.',
+    category: 'text',
+    tags: ['hard stops', 'linear-gradient'],
+    Preview: text.SplitPreview,
+  },
+  {
+    id: 'sticker',
+    title: 'Sticker Outline',
+    description:
+      'Gradient fill plus a solid outline. The trick is -webkit-text-fill-color: the usual color: transparent would take the stroke down with it.',
+    category: 'text',
+    tags: ['-webkit-text-stroke', 'text-fill-color', 'paint-order'],
+    Preview: text.StickerPreview,
+  },
+  {
+    id: 'drop-cap',
+    title: 'Illuminated Capital',
+    description:
+      'Pseudo-elements generate real boxes, so ::first-letter takes a background and a clip. A drop cap with no extra markup.',
+    category: 'text',
+    tags: ['::first-letter', 'float'],
+    Preview: text.DropCapPreview,
+  },
+  {
+    id: 'duotone',
+    title: 'Duotone Photo',
+    description:
+      'background-blend-mode: color keeps the hue of the gradient on top and the luminosity of the image below. A duotone in one declaration.',
+    category: 'text',
+    tags: ['background-blend-mode', 'url()'],
+    Preview: text.DuotonePreview,
+  },
+  {
+    id: 'confetti',
+    title: 'Confetti Scatter',
+    description:
+      'Nine radial gradients and a base fill in a single background-image list. Layers paint first-on-top, so order is the z-index here.',
+    category: 'text',
+    tags: ['radial-gradient', 'layer stack'],
+    Preview: text.ConfettiPreview,
+  },
+  {
+    id: 'neon',
+    title: 'Neon Tube',
+    description:
+      'Stacked drop-shadow filters trace the alpha the clip leaves behind, so the glow hugs the glyphs. box-shadow would trace the box instead.',
+    category: 'text',
+    tags: ['drop-shadow', 'filter', 'steps()'],
+    Preview: text.NeonPreview,
+  },
+  {
+    id: 'box-decoration',
+    title: 'Per-Line Gradient',
+    description:
+      'When an inline box wraps, box-decoration-break decides whether one gradient stretches across the whole run or restarts on every line.',
+    category: 'text',
+    tags: ['box-decoration-break', 'inline'],
+    caveat: 'Safari still needs the -webkit- prefix.',
+    Preview: text.BoxDecorationPreview,
+  },
+  {
+    id: 'fixed-backdrop',
+    title: 'Fixed Backdrop',
+    description:
+      'background-attachment: fixed makes the viewport the positioning area, turning the glyphs into a window onto a backdrop that stays put.',
+    category: 'text',
+    tags: ['background-attachment', 'cover'],
+    caveat:
+      'Interop is genuinely shaky: Firefox has a long-standing bug here and the CSSWG has an open issue on whether the combination is even defined. Fixed attachment is also unreliable on mobile.',
+    Preview: text.FixedBackdropPreview,
+  },
+  {
     id: 'spotlight',
     title: 'Cursor Spotlight',
     description:
@@ -125,6 +200,44 @@ export const demos: Demo[] = [
     category: 'interactive',
     tags: ['background-size', 'transition', ':hover'],
     Preview: interactive.WipePreview,
+  },
+  {
+    id: 'fill-level',
+    title: 'Rising Level',
+    description:
+      'Anchor the gradient to the bottom and animate its height. The background-color is clipped too, and paints the part that has not filled yet.',
+    category: 'interactive',
+    tags: ['background-position', 'background-size', 'background-color'],
+    Preview: interactive.FillLevelPreview,
+  },
+  {
+    id: 'scroll-reveal',
+    title: 'Scroll Reveal',
+    description:
+      'The same size animation, driven by scroll instead of by the clock. A timeline resolves against the nearest scroll container, so putting one inside the card scopes it here. The text is pinned, which is why scroll() is the right timeline: view() measures where its subject sits, and this one never moves.',
+    category: 'interactive',
+    tags: ['animation-timeline', 'scroll()', 'position: sticky'],
+    caveat:
+      'Where scroll timelines are unsupported the text simply renders fully filled.',
+    Preview: interactive.ScrollRevealPreview,
+  },
+  {
+    id: 'glass-border',
+    title: 'Translucent Border',
+    description:
+      'The reason padding-box exists. On the right the fill paints under the translucent border and ruins it; on the left the clip holds it back.',
+    category: 'box',
+    tags: ['padding-box', 'translucent border'],
+    Preview: box.GlassBorderPreview,
+  },
+  {
+    id: 'marching-ants',
+    title: 'Marching Ants',
+    description:
+      'A selection marquee needs its dashes to travel around the perimeter. One angled layer cannot do that — it drifts as a piece, so two sides run backwards. Four layers, one per side, each sliding along its own edge, actually circulate. Same padding-box / border-box sandwich either way.',
+    category: 'box',
+    tags: ['multi-layer', 'border-box', 'background-position'],
+    Preview: box.MarchingAntsPreview,
   },
   {
     id: 'gradient-border',
@@ -152,6 +265,17 @@ export const demos: Demo[] = [
     category: 'box',
     tags: ['border-box', 'padding-box', 'content-box'],
     Preview: box.BoxModelsPreview,
+  },
+  {
+    id: 'tile-fitting',
+    title: 'Tile Fitting',
+    description:
+      'One halftone tile, three repeat modes. The box is exactly three tiles tall but 5.45 tiles wide, so only the horizontal axis has a remainder to resolve — repeat clips it, space spaces it out, round rescales the tile.',
+    category: 'box',
+    tags: ['background-repeat', 'space', 'round'],
+    caveat:
+      'space and round fit tiles to the background positioning area, not to whatever you clip to. Under background-clip: text the glyph edges still cut straight through the dots.',
+    Preview: box.TileFittingPreview,
   },
 ]
 

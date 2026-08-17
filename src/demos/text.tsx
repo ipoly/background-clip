@@ -1,4 +1,4 @@
-import { Headline } from './shared'
+import { Caption, Headline } from './shared'
 
 export function AuroraPreview() {
   return <Headline className="fx-aurora">AURORA</Headline>
@@ -46,4 +46,53 @@ export function LiquidPreview() {
 
 export function MarblePreview() {
   return <Headline className="fx-marble">MARBLE</Headline>
+}
+
+export function SplitPreview() {
+  return <Headline className="fx-split">SPLIT</Headline>
+}
+
+export function StickerPreview() {
+  return <Headline className="fx-sticker">STICKER</Headline>
+}
+
+export function DuotonePreview() {
+  return <Headline className="fx-duotone">DUOTONE</Headline>
+}
+
+export function ConfettiPreview() {
+  return <Headline className="fx-confetti">CONFETTI</Headline>
+}
+
+export function NeonPreview() {
+  return <Headline className="fx-neon">NEON</Headline>
+}
+
+export function FixedBackdropPreview() {
+  return (
+    <div className="flex flex-col items-center">
+      <Headline className="fx-fixed-backdrop">WINDOW</Headline>
+      <Caption>Scroll the page</Caption>
+    </div>
+  )
+}
+
+export function DropCapPreview() {
+  return (
+    <p className="fx-drop-cap max-w-[19rem] text-sm leading-relaxed text-zinc-400">
+      Pseudo-elements generate real boxes, so they take a background and they
+      take a clip. One selector turns the first letter of a paragraph into an
+      illuminated capital, with no extra span to maintain.
+    </p>
+  )
+}
+
+export function BoxDecorationPreview() {
+  return (
+    <p className="max-w-[16rem] text-center text-2xl leading-tight font-black tracking-tight">
+      <span className="fx-box-decoration">
+        every line gets the whole rainbow
+      </span>
+    </p>
+  )
 }

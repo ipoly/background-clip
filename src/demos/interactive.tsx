@@ -54,3 +54,38 @@ export function WipePreview() {
     </button>
   )
 }
+
+export function FillLevelPreview() {
+  return (
+    <button
+      type="button"
+      className="fx-fill-target flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fuchsia-400"
+    >
+      <Headline className="fx-fill-level">FLOOD</Headline>
+      <Caption>Hover or focus</Caption>
+    </button>
+  )
+}
+
+export function ScrollRevealPreview() {
+  return (
+    // Chrome makes scroll containers focusable on its own; Firefox and Safari
+    // do not, so without tabindex there is no keyboard route into this box.
+    // `-mx-4` cancels the stage padding so the scrollbar meets the border.
+    <div
+      tabIndex={0}
+      role="region"
+      aria-label="Scroll to reveal the gradient"
+      // The ring is inset because the scroller runs to the stage edge, and the
+      // stage clips — an outward offset would be cut off on every side.
+      className="fx-scroll-reveal-scroller -mx-4 w-full rounded-xl focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-fuchsia-400"
+    >
+      <div className="fx-scroll-reveal-track">
+        <div className="fx-scroll-reveal-pin">
+          <Headline className="fx-scroll-reveal">SCROLL</Headline>
+          <Caption>Scroll inside</Caption>
+        </div>
+      </div>
+    </div>
+  )
+}

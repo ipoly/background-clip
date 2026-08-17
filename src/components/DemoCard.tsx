@@ -28,7 +28,7 @@ export function DemoCard({ demo, index }: DemoCardProps) {
   return (
     <article
       className={cn(
-        'animate-rise group flex flex-col rounded-2xl border border-white/10 bg-white/[0.025] p-4 backdrop-blur-sm transition duration-300 hover:border-white/25 hover:bg-white/[0.05]',
+        'animate-rise group flex flex-col rounded-2xl border border-white/10 bg-white/2.5 p-4 backdrop-blur-sm transition duration-300 hover:border-white/25 hover:bg-white/5',
         RISE_DELAYS[index % RISE_DELAYS.length],
       )}
     >
@@ -41,7 +41,12 @@ export function DemoCard({ demo, index }: DemoCardProps) {
         </span>
       </div>
 
-      <div className="demo-stage relative flex h-52 items-center justify-center overflow-hidden rounded-xl border border-white/10 px-4">
+      {/* `overflow-clip` rather than `overflow-hidden`: hidden would make this
+          a scroll container, and a scroll timeline resolves against its
+          subject's nearest scroll container. This stage never scrolls, so it
+          would silently freeze any scroll-driven effect inside it. clip
+          clips just the same without being a scroll container. */}
+      <div className="demo-stage relative flex h-52 items-center justify-center overflow-clip rounded-xl border border-white/10 px-4">
         <Preview />
       </div>
 
@@ -54,12 +59,18 @@ export function DemoCard({ demo, index }: DemoCardProps) {
         {demo.tags.map((tag) => (
           <li
             key={tag}
-            className="rounded-md bg-white/[0.06] px-2 py-0.5 font-mono text-[0.65rem] text-zinc-400"
+            className="rounded-md bg-white/6 px-2 py-0.5 font-mono text-[0.65rem] text-zinc-400"
           >
             {tag}
           </li>
         ))}
       </ul>
+
+      {demo.caveat && (
+        <p className="mt-3 rounded-lg border border-amber-400/25 bg-amber-400/7 px-2.5 py-1.5 text-[0.7rem] leading-relaxed text-amber-200/85">
+          {demo.caveat}
+        </p>
+      )}
 
       <div className="mt-auto pt-4">
         <button

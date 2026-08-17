@@ -457,6 +457,345 @@
 }
 /* @end */
 
+/* @demo tile-fitting */
+.fx-tile-fitting {
+  --fx-tile: 44px;
+
+  /* Gradient on top, disc tile below it, so the per-layer blend modes can do
+     two jobs at once: the gradient multiplies into the white discs to ink
+     them, and the tile layer stays `normal` so the tiles paint over the flat
+     background-color. Anywhere the tile layer does not reach — the gaps that
+     `space` opens up — the gradient multiplies into that near-black colour
+     instead, which is why the leftover space reads as a dim band. */
+  background-image:
+    linear-gradient(118deg, #ffd166, #ff5f6d 52%, #7c3aed),
+    radial-gradient(closest-side, #ffffff 58%, #000000 74%);
+  background-size: 100% 100%, var(--fx-tile) var(--fx-tile);
+  background-repeat: no-repeat, var(--fx-repeat, repeat);
+  background-blend-mode: multiply, normal;
+  background-color: #2f2f2f;
+
+  /* Exactly 3 tiles tall but 5.45 tiles wide, so only the horizontal axis has
+     a remainder for the repeat mode to deal with: `repeat` lets the box edge
+     slice the last column, `space` holds the tile size and spreads the
+     leftover across the gaps, `round` keeps the grid gapless and rescales the
+     tile instead — which stretches the discs into ellipses. */
+  inline-size: calc(var(--fx-tile) * 5.45);
+  block-size: calc(var(--fx-tile) * 3);
+  /* An outline rather than a border: it sits outside the box, so the tile
+     grid is measured against the edge you can actually see. */
+  outline: 1px solid rgb(255 255 255 / 0.18);
+}
+/* @end */
+
+/* @demo split */
+.fx-split {
+  /* Two hard stops a hair apart: wide enough to antialias, narrow enough to
+     still read as a clean cut. The split follows the element box, not the
+     individual glyphs. */
+  background-image: linear-gradient(
+    114deg,
+    #22d3ee 0 49.4%,
+    #f472b6 50.6% 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+/* @end */
+
+/* @demo sticker */
+.fx-sticker {
+  background-image: linear-gradient(180deg, #fef08a, #fb923c 52%, #ef4444);
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* `-webkit-text-fill-color` instead of `color`, because the stroke colour
+     below defaults to currentColor — `color: transparent` would make the
+     outline vanish along with the fill. */
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2px #0b0b12;
+  /* Stroke behind fill, so the outline does not eat into the letterforms. */
+  paint-order: stroke fill;
+  text-shadow: 0 4px 0 rgb(0 0 0 / 0.5);
+}
+/* @end */
+
+/* @demo drop-cap */
+.fx-drop-cap::first-letter {
+  float: left;
+  margin-right: 0.06em;
+  font-size: 3.4em;
+  font-weight: 900;
+  line-height: 0.84;
+  /* Clipping works on generated boxes too, so a single pseudo-element gives
+     you an illuminated capital with no extra markup. */
+  background-image: linear-gradient(150deg, #fbbf24, #f43f5e 58%, #a855f7);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+/* @end */
+
+/* @demo duotone */
+.fx-duotone {
+  background-image:
+    linear-gradient(135deg, #f43f5e, #2563eb),
+    url("../assets/nebula.svg");
+  background-size: cover;
+  background-position: center;
+  /* `color` keeps the hue and saturation of the top layer and the luminosity
+     of the photo underneath — the whole of a duotone in one declaration. */
+  background-blend-mode: color;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+/* @end */
+
+/* @demo confetti */
+.fx-confetti {
+  /* A background-image list has no practical length limit, and layers paint
+     first-on-top. Every scrap here is one more radial-gradient. */
+  background-image:
+    radial-gradient(circle at 6% 28%, #ec4899 0 13px, transparent 13px),
+    radial-gradient(circle at 17% 74%, #eab308 0 9px, transparent 9px),
+    radial-gradient(circle at 28% 15%, #22c55e 0 15px, transparent 15px),
+    radial-gradient(circle at 38% 62%, #0ea5e9 0 10px, transparent 10px),
+    radial-gradient(circle at 49% 22%, #f43f5e 0 14px, transparent 14px),
+    radial-gradient(circle at 60% 78%, #a855f7 0 11px, transparent 11px),
+    radial-gradient(circle at 71% 32%, #f97316 0 9px, transparent 9px),
+    radial-gradient(circle at 82% 70%, #14b8a6 0 14px, transparent 14px),
+    radial-gradient(circle at 94% 26%, #d946ef 0 11px, transparent 11px),
+    linear-gradient(#fafafa, #d4d4d8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+/* @end */
+
+/* @demo neon */
+.fx-neon {
+  background-image: linear-gradient(180deg, #ffffff, #67e8f9 44%, #22d3ee);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  /* drop-shadow follows the alpha left behind by the clip, so the glow traces
+     the glyph outlines. box-shadow would trace the element box instead. */
+  filter:
+    drop-shadow(0 0 2px #22d3ee)
+    drop-shadow(0 0 9px #06b6d4)
+    drop-shadow(0 0 24px #0e7490);
+  animation: fx-neon-flicker 5s steps(1, end) infinite;
+}
+
+@keyframes fx-neon-flicker {
+  0%,
+  38%,
+  41%,
+  43%,
+  100% {
+    opacity: 1;
+  }
+  39%,
+  42% {
+    opacity: 0.62;
+  }
+}
+/* @end */
+
+/* @demo box-decoration */
+.fx-box-decoration {
+  background-image: linear-gradient(90deg, #22d3ee, #a78bfa 50%, #f472b6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  /* Only meaningful on an inline box that wraps: `clone` restarts the
+     gradient on every line, `slice` (the default) stretches one gradient
+     across the whole broken run. */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+/* @end */
+
+/* @demo fixed-backdrop */
+.fx-fixed-backdrop {
+  background-image: linear-gradient(135deg, #f0abfc, #818cf8 45%, #22d3ee);
+  /* The positioning area becomes the viewport rather than the element, so the
+     glyphs act as a window onto a backdrop that stays put while you scroll. */
+  background-attachment: fixed;
+  background-size: cover;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+/* @end */
+
+/* @demo fill-level */
+.fx-fill-level {
+  background-image: linear-gradient(#7dd3fc, #0ea5e9 55%, #0369a1);
+  background-repeat: no-repeat;
+  /* Anchored to the bottom, so growing the height reads as a rising level.
+     The background-color is clipped too, and paints the empty part. */
+  background-position: 0 100%;
+  background-size: 100% 0%;
+  background-color: #3f3f46;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: background-size 900ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fx-fill-target:hover .fx-fill-level,
+.fx-fill-target:focus-visible .fx-fill-level {
+  background-size: 100% 100%;
+}
+/* @end */
+
+/* @demo scroll-reveal */
+/* The scroll container is part of the effect, not decoration around it: a
+   scroll timeline resolves against the nearest scroll container, so which
+   element that is decides whether any of this works. Hence it lives here with
+   the rest of the effect rather than in the markup. */
+.fx-scroll-reveal-scroller {
+  block-size: 100%;
+  overflow-y: auto;
+  /* Deliberately left at the default `overscroll-behavior: auto`. `contain`
+     reads like the careful choice here and is the wrong one: with the inner
+     scroller at its end, the page then refuses to move at all while the
+     pointer is over the card. Chaining is what stops it being a trap. */
+  /* Lets the pin below size itself to one scrollport with cqb units. */
+  container-type: size;
+  /* The scrollbar is the affordance — do not hide it. */
+  scrollbar-width: thin;
+  scrollbar-color: #52525b transparent;
+}
+
+/* Taller than the scrollport, which is the only reason there is travel. */
+.fx-scroll-reveal-track {
+  block-size: 320%;
+}
+
+.fx-scroll-reveal-pin {
+  position: sticky;
+  top: 0;
+  /* One scrollport tall, so its contents land in the optical centre. */
+  block-size: 100cqb;
+  display: grid;
+  place-items: center;
+  align-content: center;
+}
+
+.fx-scroll-reveal {
+  background-image: linear-gradient(90deg, #f472b6, #facc15 50%, #4ade80);
+  background-repeat: no-repeat;
+  background-color: #3f3f46;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Where scroll timelines are missing the text simply renders fully filled. */
+@supports (animation-timeline: scroll()) {
+  .fx-scroll-reveal {
+    background-size: 0% 100%;
+    /* Firefox wants a real duration even though the timeline drives it. */
+    animation: fx-scroll-fill 1ms linear both;
+    /* Must come after the shorthand — `animation` resets it to `auto`.
+       `scroll()`, not `view()`: the text is pinned, and a view timeline
+       measures where its subject sits. A subject that never moves gives a
+       truncated range that never reaches either end. */
+    animation-timeline: scroll();
+  }
+}
+
+@keyframes fx-scroll-fill {
+  to {
+    background-size: 100% 100%;
+  }
+}
+/* @end */
+
+/* @demo glass-border */
+.fx-glass-border {
+  border: 7px solid rgb(255 255 255 / 0.22);
+  border-radius: 1rem;
+  background-image: linear-gradient(140deg, #7c3aed, #db2777);
+  /* The reason padding-box exists: without it the fill paints underneath the
+     translucent border and the border stops looking translucent. */
+  background-clip: padding-box;
+}
+
+.fx-glass-border-bleed {
+  border: 7px solid rgb(255 255 255 / 0.22);
+  border-radius: 1rem;
+  background-image: linear-gradient(140deg, #7c3aed, #db2777);
+  background-clip: border-box;
+}
+/* @end */
+
+/* @demo marching-ants */
+/* Two ways to run dashes around a border. Both use the same sandwich — card
+   fill clipped to the padding box, dash layers to the border box — and differ
+   only in how many layers there are and where each one travels. Square corners
+   throughout: an axis-aligned strip cannot follow a radius, and an angled
+   stripe lying along a corner arc lights the whole curve at once. */
+.fx-marching-ants {
+  border: 3px solid transparent;
+  background-origin: border-box;
+}
+
+/* Four layers, one per side, each sliding along its own edge, so the dashes
+   circulate the way a selection marquee does. Every strip travels one whole
+   16px tile per iteration and therefore lands back on itself. */
+.fx-marching-ants-edges {
+  background-image:
+    linear-gradient(#0b0b12, #0b0b12),
+    linear-gradient(90deg, #22d3ee 50%, transparent 50%),
+    linear-gradient(180deg, #22d3ee 50%, transparent 50%),
+    linear-gradient(90deg, #22d3ee 50%, transparent 50%),
+    linear-gradient(180deg, #22d3ee 50%, transparent 50%);
+  background-size: auto, 16px 3px, 3px 16px, 16px 3px, 3px 16px;
+  background-repeat: no-repeat, repeat-x, repeat-y, repeat-x, repeat-y;
+  background-position: 0 0, 0 0, 100% 0, 0 100%, 0 0;
+  background-clip: padding-box, border-box, border-box, border-box, border-box;
+  animation: fx-ants-circle 1000ms linear infinite;
+}
+
+@keyframes fx-ants-circle {
+  to {
+    /* Top rightward, right downward, bottom leftward, left upward. */
+    background-position:
+      0 0,
+      16px 0,
+      100% 16px,
+      -16px 100%,
+      0 -16px;
+  }
+}
+
+/* One diagonal layer slid sideways — the classic raster technique, the one the
+   effect is named after. It drifts as a single piece rather than circulating:
+   every edge moves the same way, so two of the four run counter to the
+   direction a marquee would. Its own catch is the distance. Stripes repeat
+   along the gradient axis, not along x, so one 16px period costs
+   16 / cos(45deg) = 22.63px of horizontal travel; 16px leaves a jump. */
+.fx-marching-ants-diagonal {
+  background-image:
+    linear-gradient(#0b0b12, #0b0b12),
+    repeating-linear-gradient(-45deg, #22d3ee 0 8px, transparent 8px 16px);
+  background-clip: padding-box, border-box;
+  animation: fx-ants-march 1400ms linear infinite;
+}
+
+@keyframes fx-ants-march {
+  to {
+    background-position:
+      0 0,
+      22.63px 0;
+  }
+}
+/* @end */
+
 @media (prefers-reduced-motion: reduce) {
   .fx-aurora,
   .fx-holographic,
@@ -466,9 +805,18 @@
   .fx-ember,
   .fx-crt,
   .fx-liquid,
+  .fx-neon,
   .fx-spin-border,
+  .fx-marching-ants-edges,
+  .fx-marching-ants-diagonal,
   .fx-glitch::before,
   .fx-glitch::after {
     animation: none;
+  }
+
+  /* Killing the animation outright would leave this one empty, so fill it. */
+  .fx-scroll-reveal {
+    animation: none;
+    background-size: 100% 100%;
   }
 }

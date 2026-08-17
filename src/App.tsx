@@ -32,8 +32,11 @@ export default function App() {
     [filter],
   )
 
+  // `overflow-clip`, not `overflow-hidden` — see the note on the demo stage in
+  // DemoCard: hidden would make this a scroll container and capture the scroll
+  // timeline of anything inside it.
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-clip">
       <div
         aria-hidden
         className="page-glow pointer-events-none fixed inset-0 -z-10"

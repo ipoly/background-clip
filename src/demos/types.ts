@@ -12,6 +12,8 @@ export interface Demo {
   category: DemoCategory
   /** Key CSS properties worth highlighting, shown as chips on the card. */
   tags: string[]
+  /** Support or interop warning, shown on the card when the effect has one. */
+  caveat?: string
   Preview: ComponentType
 }
 
